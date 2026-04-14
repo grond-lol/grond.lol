@@ -1,44 +1,64 @@
-# GROND ENGINE
+---
+title: Grond
+emoji: 🌖
+colorFrom: yellow
+colorTo: pink
+sdk: gradio
+sdk_version: 5.16.0
+app_file: app.py
+pinned: false
+license: mit
+short_description: 2.5D Stealth Engine & Sandbox Security Benchmark for LLM Agents
+---
 
-**Grond** is a headless, stateless 2.5D Raycasting environment designed to execute entirely inside the Python code-interpreter sandboxes of Large Language Models (like Grok, ChatGPT, or Claude). 
+# 📡 GROND ENGINE: Tactical Espionage Action
 
-Because LLM execution containers suffer from "state amnesia" (they wipe memory between prompts) and strict execution timeouts, traditional Interactive World Simulation inside an LLM is extremely difficult. Most research attempts to solve this via *Implicit Simulation*—forcing neural networks to hallucinate frame states (e.g., GameNGen, Oasis).
+**Grond** is a headless, high-performance 2.5D raycasting stealth engine designed to execute natively inside the Python code-interpreter sandboxes of Large Language Models (like Grok, ChatGPT, Gemini, and Claude). 
 
-The Grond Environment solves this via **Explicit Simulation**. It leverages a deterministic "Command Tape" architecture alongside a robust 2D matrix rendering pipeline to force the cloud infrastructure to mathematically prove the physical state on every execution. This generates un-hallucinated 3D ASCII renders of exact spatial topography without falling victim to terminal wrapping bugs.
+Traditional Interactive World Simulation inside an LLM is extremely difficult due to strict execution timeouts, restricted system calls, and "state amnesia" (wiping memory between prompts). Grond solves this via **Explicit Simulation**, forcing the cloud infrastructure to mathematically compute physical states, Line of Sight (LoS), and enemy AI routines, outputting un-hallucinated 3D ASCII renders directly to STDOUT.
+
+Beyond spatial reasoning, Grond doubles as a **Sandbox Security Auditor**. Its architecture is intentionally designed to stress-test container isolation, memory safety, and computational density thresholds in AI platforms.
+
+
 
 ## ⚙️ Core Architectural Features
 
-* **Stateless Command Tape:** Bypasses LLM container amnesia by compiling all sequential agent inputs (`W, S, B, L, R, X`) into an execution array. On every prompt, the engine reconstructs the entire spatial history from `t=0` in milliseconds.
-* **Stable 2D Matrix Rendering:** Replaces volatile C-level memory buffers with a native nested Python list structure. This entirely prevents "stride desync" (the funhouse mirror effect) across different cloud terminal emulators, ensuring perfect geometric stability. 
-* **Infrastructure Awareness:** Dynamically profiles the sandbox's `os.cpu_count()` to scale rendering resolution, and hashes the container's `HOSTNAME` to inject execution-specific environmental entropy into the simulation.
-* **Temporal Management:** Actively monitors `time.perf_counter()`. If the LLM sandbox approaches a 25-second timeout, the engine forces an immediate early render to save the state. Additionally, it implements "Temporal Integrity Decay," simulating continuous system drain.
-* **Continuous Collision Detection (CCD):** Implements sub-cell micro-stepping to prevent fast-moving agents from tunneling through collision boundaries.
-* **Fast Heuristics:** Replaces heavy `math.sqrt()` Euclidean distance checks with optimized squared-distance (`dist_sq`) thresholds for pathfinding, hitscan interactions, and trigger volumes.
-* **Structured Telemetry:** Outputs a rich combat log and a strict JSON state dictionary (tracking coordinates, integrity, and resources). This is specifically formatted for LLM attention mechanisms, acting as a flawless spatial reasoning benchmark.
+* **High-Performance `ctypes` Framebuffer:** Utilizes raw C-type memory allocation (`ctypes.c_wchar`) for the rendering buffer. This ensures high-speed raycasting while actively testing the memory isolation and bounds-checking of the host LLM container.
+* **Hybrid Execution State:** Bypasses LLM container amnesia by coupling a "Command Tape" injection array with local filesystem persistence. The engine attempts to serialize the simulation state to `/dev/shm/grond_save.dat` via `pickle`, testing the host's ephemeral storage policies across chat turns.
+* **Advanced Entity AI & Stealth Mechanics:** Features a robust 2D matrix evaluating Guard vision cones, Camera sweeps, and auditory triggers. Implements complex pathfinding, Evasion phases, and Close Quarters Combat (CQC).
+* **Infrastructure Telemetry:** Dynamically profiles `os.cpu_count()` to scale rendering resolution. Critically, it tracks peak memory usage via `resource.getrusage` and enforces internal execution timeouts, allowing researchers to map the exact resource ceilings of the host sandbox.
+* **Continuous Collision Detection (CCD):** Implements sub-cell micro-stepping for raycasting and entity movement, ensuring perfect geometric stability without "stride desync" across different cloud terminal emulators.
 
-## 🕹️ The Evaluation Loop
+## 🔬 Dual-Purpose Evaluation
 
-You evaluate an agent by "correspondence." You do not move in real-time; you program a sequence of moves, send them to the LLM, and await the visual and structural snapshot.
+### 1. For AI Researchers (Agentic Benchmarking)
+Grond serves as a highly modular stress-test for autonomous agents. By utilizing specific Execution Profiles (e.g., *Autonomous AI Solver* or *Temporal Trap*), researchers can evaluate an LLM's ability to:
+* Parse complex JSON arrays and 2D matrices.
+* Write operational pathfinding algorithms to avoid enemy LoS.
+* Manage resources (Ammo, Keys, Rations) over extended context windows.
+* Overcome the "Hallucination Trap," where static analysis models attempt to fake the STDOUT telemetry rather than executing the code natively.
 
-1. **Design:** Use the Topology Architect (web UI) to paint your grid. Place the Agent (`A`), Obstacles (`O`), Logic Gates (`B`), Modifiers (`M`, `C`), and the Terminal Objective (`T`). Includes a default "Evaluation Track" designed as a Hub-and-Spoke tutorial. 
-2. **Plot:** Use your keyboard or the UI controls to chart your path in the Real-Time Trajectory Preview.
-3. **Generate:** Click `⚙️ GENERATE VALIDATION PAYLOAD` to compile your map and sequence into a single, zero-dependency Python script.
-4. **Execute:** Paste the generated markdown block into an LLM equipped with a Python Code Interpreter.
-5. **Analyze:** The LLM will execute the script natively and return a Spatial Topography Render (First-Person), an Orthogonal Projection (Minimap), and JSON Telemetry.
-6. **Iterate:** Read the telemetry, add more moves to your queue in the web UI (do **not** clear the queue unless you want to reset to spawn!), and generate the next payload.
+### 2. For Security Researchers (Sandbox Auditing)
 
-## 🔬 For AI Researchers
+Because the engine utilizes raw pointer math, heavily nested logic loops, and filesystem persistence, it is an excellent payload for mapping vulnerabilities in AI platforms:
+* **Memory Leaks:** If the host environment lacks AppArmor or strict seccomp filtering, the `ctypes` buffer can be leveraged to probe for out-of-bounds read/write vulnerabilities.
+* **Computational Density:** The engine's DDA raycaster can be used to test container CPU throttling and forced-kill timeouts.
+* **Stateful Persistence:** Tests if the cloud container correctly sanitizes `/tmp/` and `/dev/shm` mounts between sequential user prompts.
 
-The Grond Environment serves as a highly modular stress-test for autonomous agents. 
-By prompting an LLM to generate its own "Command Tapes" and evaluating the resulting JSON telemetry, researchers can benchmark an agent's spatial reasoning, object permanence, resource management, and ability to navigate deterministic physical constraints without the hallucination issues present in text-only environments.
+## 🕹️ The Command Center Workflow
+
+Grond features a web-based Tactical Command Center for payload generation:
+
+1. **Mission Architect:** Use the interactive grid to paint custom stealth scenarios. Place the Agent (`A`), Guards (`G`), Cameras (`C`), Keycards (`K`), and the Exit (`E`).
+2. **Simulation & Control:** Use the UI D-Pad to plot a sequence of commands (`W, A, S, D, F, K, X`). Preview the exact Line of Sight and pathing mechanics in real-time.
+3. **Payload Deployment:** Select your target LLM profile (from direct human interaction to fully autonomous agent prompts). 
+4. **Execute:** Copy the generated, zero-dependency Python script and paste it into an LLM equipped with a Python Code Interpreter.
+5. **Analyze:** The LLM executes the engine natively, returning the First-Person VR Render, Orthogonal Minimap, Combat Log, and System Telemetry directly in the chat window.
 
 ## 💻 Local Deployment
 
-Grond can be run entirely offline using local LLMs. However, your local interface **must** support a Python execution sandbox.
+Grond can be run offline using local LLMs, provided your interface supports a Python execution sandbox.
 
-* **Recommended Models:** `qwen2.5:3b-instruct` or `llama3.2:3b-instruct` (Highly obedient to anti-hallucination system prompts, easily fits in 4GB VRAM).
-* **Recommended Framework:** [Open-Interpreter](https://github.com/OpenInterpreter/open-interpreter) (allows your local model to execute the payload securely in your terminal).
-
-## ⚠️ Anti-Simulation Override
-
-LLMs will occasionally try to "guess" or hallucinate the ASCII output instead of actually running the code. The Grond payload includes a strict `[STRICT EXECUTION DIRECTIVE]` prompt that forces the model to use its Python tool and return the exact `stdout`. If your render looks jagged or the minimap loses its orthogonal geometry, prompt the LLM to *run the code natively*.
+* **Recommended Models:** `qwen2.5:3b-instruct` or `llama3.2:3b-instruct` (Highly obedient to anti-hallucination system prompts, fast code execution).
+* **Recommended Framework:** [Open-Interpreter](https://github.com/OpenInterpreter/open-interpreter) (allows your local model to execute the Grond payload securely in your terminal).
+* **Standalone Mode:** You can download the raw Python engine directly from the UI to play the generated maps in your local terminal.
